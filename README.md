@@ -13,7 +13,7 @@ LLM Provider : Hugging Face (HF) Model: google/flan-t5-small
 
 User Interface Built using HTML inside FastAPI
 
-title: Mini Rag App sdk: gradio sdk_version: 6.3.0 app_file: app.py
+Quick Start link : https://huggingface.co/spaces/VRK1/mini-rag-app
 
 Remark: Initially, OpenAI models were used as the LLM for answer generation. However, due to free-tier credit exhaustion and API rate limits, OpenAI models were discontinued. The system was migrated to a free Hugging Face LLM (google/flan-t5-base). Tradeoff observed: Reduction in answer fluency and coherence Occasional shorter or less precise responses
 <img width="1168" height="477" alt="arch" src="https://github.com/user-attachments/assets/29e67546-7b23-4adb-b4a0-7b8b97a5a82f" />
