@@ -4,8 +4,9 @@ python-dotenv
 cohere
 sentence-transformers
 transformers
-torch>=2.5.0
-pinecone-client
+torch
+pinecone
 
 python-multipart
+
 
