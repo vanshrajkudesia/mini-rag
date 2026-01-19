@@ -106,25 +106,43 @@ def rerank(query, docs, top_n=5):
 
 def answer(query, docs):
     """
-    Generate answer using top-k retrieved & reranked docs.
-
-    docs: list of dicts with 'text' key OR list of strings
+    Generate answer using full document as context.
+    docs: list of strings OR list of dicts with 'text'
     """
-    # Handle both dicts and strings
+
+    # Join entire document
     context_text = "\n\n".join(
-        [d["text"] if isinstance(d, dict) else d for d in docs]
+        d["text"] if isinstance(d, dict) else d
+        for d in docs
     )
-    print(docs)
+
     prompt = f"""
-Answer the question using ONLY the context below.
+    Answer the question using ONLY the context below.
 
-Context:
-{context_text}
+    Context:
+    {context_text}
 
-Question:
-{query}
-"""
-    inputs = tokenizer(prompt, return_tensors="pt", truncation=True)
-    outputs = model.generate(**inputs, max_length=200)
-    return tokenizer.decode(outputs[0], skip_special_tokens=False)
+    Question:
+    {query}
+
+    Answer:
+    """
+
+    inputs = tokenizer(
+        prompt,
+        return_tensors="pt",
+        truncation=True,
+        max_length=512   # safe for flan-t5-base
+    )
+
+    outputs = model.generate(
+        **inputs,
+        max_length=200,
+        num_beams=4,
+        early_stopping=True
+    )
+
+    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+
 
